@@ -1,0 +1,24 @@
+# تفعيل إعادة الكتابة
+RewriteEngine On
+
+# التأكد من أن mod_rewrite مفعّل
+RewriteBase /project/
+
+# السماح بطلبات مباشرة للملفات الحقيقية
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# إعادة توجيه كل شيء إلى index.html (للـ SPA مثل React, Vue, Vite)
+RewriteRule ^ index.html [QSA,L]
+
+# السماح بطلبات CORS إذا كنت تتعامل مع localhost:5173
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "*"
+  Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+  Header set Access-Control-Allow-Headers "Content-Type"
+</IfModule>
+
+# تعيين نوع المحتوى الافتراضي
+AddType application/javascript .js
+AddType text/css .css
+AddType text/html .html
